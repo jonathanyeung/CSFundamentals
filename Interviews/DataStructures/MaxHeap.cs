@@ -6,10 +6,23 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
+    /// <summary>
+    /// A generic MaxHeap implementation that uses a List for storing objects.
+    /// http://en.wikipedia.org/wiki/Binary_heap
+    /// </summary>
     public class MaxHeap<T> where T : IComparable
     {
+        /// <summary>
+        /// Heap is implemented with a list. Index 0 contains row 0; 1-2 row 1;
+        /// 3-7 row 2; etc.  
+        /// </summary>
         private List<T> data = new List<T>();
 
+        /// <summary>
+        /// Insertion is done by first adding the new object to the end, and
+        /// then 'bubbling up'. 
+        /// </summary>
+        /// <param name="obj"></param>
         public void Insert(T obj)
         {
             data.Add(obj);
@@ -62,26 +75,33 @@ namespace DataStructures
             get { return data.Count; }
         }
 
+        /// <summary>
+        /// Recursive 'bubble down'. Compare value at i to its children.
+        /// If i is less than one of its children, then swap value at i
+        /// with the larger of the children.
+        /// </summary>
+        /// <param name="i"></param>
         private void Heapify(int i)
         {
+            // The left and right children of node i
             var left = 2 * i + 1;
             var right = 2 * i + 2;
-            var largest = i;
+            var indexOfLargest = i;
 
-            if (left < data.Count && data[left].CompareTo(data[largest]) > 0)
+            if (left < data.Count && data[left].CompareTo(data[indexOfLargest]) > 0)
             {
-                largest = left;
+                indexOfLargest = left;
             }
-            if (right < data.Count && data[right].CompareTo(data[largest]) > 0)
+            if (right < data.Count && data[right].CompareTo(data[indexOfLargest]) > 0)
             {
-                largest = right;
+                indexOfLargest = right;
             }
-            if (largest != i)
+            if (indexOfLargest != i)
             {
-                var tmp = data[largest];
-                data[largest] = data[i];
+                var tmp = data[indexOfLargest];
+                data[indexOfLargest] = data[i];
                 data[i] = tmp;
-                Heapify(largest);                
+                Heapify(indexOfLargest);                
             }
         }
 
