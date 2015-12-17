@@ -8,32 +8,6 @@ namespace Interviews
 {
     public static class Sorting
     {
-        public static int BinarySearch(int[] input, int value)
-        {
-            Array.Sort(input);
-
-            return _search(input, value, 0, input.Length - 1);
-        }
-
-        public static int _search(int[] input, int value, int left, int right)
-        {
-            if (right < left)
-            {
-                return -1;
-            }
-
-            int mid = (left + right) / 2;
-
-            if (input[mid] == value) return mid;
-            else if (input[mid] > value)
-            {
-                return _search(input, value, left, mid - 1);
-            }
-            else
-            {
-                return _search(input, value, mid + 1, right);
-            }
-        }
 
         public static void PrintArray(int[] input)
         {

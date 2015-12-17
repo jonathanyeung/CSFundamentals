@@ -51,11 +51,11 @@ namespace Interviews
 
                 ar = new int[] {1, 2, 3, 5, 8, 13, 21};
 
-                Console.WriteLine(Sorting.BinarySearch(ar, 1));
+                Console.WriteLine(Searching.BinarySearch(ar, 1));
 
-                Console.WriteLine(Sorting.BinarySearch(ar, 21));
+                Console.WriteLine(Searching.BinarySearch(ar, 21));
 
-                Console.WriteLine(Sorting.BinarySearch(ar, 13));
+                Console.WriteLine(Searching.BinarySearch(ar, 13));
             }
 
         }

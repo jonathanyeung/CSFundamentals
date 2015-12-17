@@ -8,27 +8,11 @@ namespace Interviews
 {
     public class DynamicProgramming
     {
-        public static void MaximumSubarray()
-        {
-            var t = Convert.ToInt32(Console.ReadLine());
-
-            for (int i = 0; i < t; i++)
-            {
-                int length = Convert.ToInt32(Console.ReadLine());
-
-                var s_elements = Console.ReadLine().Split(' ');
-
-                var elements = new int[length];
-
-                for (int j = 0; j < length; j++)
-                {
-                    elements[j] = Convert.ToInt32(s_elements[j]);
-                }
-
-                var output = MaximumContiguous(elements).ToString() + MaximumNoncontiguous(elements).ToString();
-            }
-        }
-
+        /// <summary>
+        /// Return the sum of the values of the maximum contiguous subarray
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static int MaximumContiguous(int[] input)
         {
             int largestSum = Int32.MinValue;
@@ -54,10 +38,15 @@ namespace Interviews
             return largestSum;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static int MaximumNoncontiguous(int[] input)
         {
             int sum = 0;
-            int largestNegative = 0;
+            int largestNegative = int.MinValue;
             bool positiveFound = false;
 
             for (int i = 0; i < input.Length; i++)
