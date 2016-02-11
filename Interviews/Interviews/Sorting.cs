@@ -9,32 +9,19 @@ namespace Interviews
     public static class Sorting
     {
 
-        public static void PrintArray(int[] input)
+        public static void MergeSort<T>(T[] input) where T : IComparable
         {
-            string output = "";
-
-            foreach (var i in input)
-            {
-                output += i;
-                output += " ";
-            }
-
-            Console.WriteLine(output);
+            _MergeSort(input, 0, input.Length - 1);
         }
 
-        public static void MergeSort(int[] input)
-        {
-            _mergeSort(input, 0, input.Length - 1);
-        }
-
-        private static void _mergeSort(int[] input, int left, int right)
+        private static void _MergeSort<T>(T[] input, int left, int right) where T : IComparable
         {
             if (left < right)
             {
-                var mid = (left + right) / 2;
-                _mergeSort(input, left, mid);
-                _mergeSort(input, mid + 1, right);
-                merge(input, left, mid, right);
+                int mid = (left + right) / 2;
+                _MergeSort(input, left, mid);
+                _MergeSort(input, mid + 1, right);
+                Merge(input, left, right, mid + 1);
             }
         }
 
@@ -43,43 +30,42 @@ namespace Interviews
         /// </summary>
         /// <param name="input"></param>
         /// <param name="left"></param>
-        /// <param name="mid"></param>
         /// <param name="right"></param>
-        private static void merge(int[] input, int left, int mid, int right)
+        /// <param name="mid"></param>
+        private static void Merge<T>(T[] input, int left, int right, int mid) where T : IComparable
         {
-            int[] Helpers = new int[input.Length];
+            T[] helper = new T[input.Length];
+            Array.Copy(input, helper, input.Length);
 
-            Array.Copy(input, Helpers, Helpers.Length);
+            var dP = left;
+            var lP = left;
+            var rP = mid;
 
-            int lP = left;
-            int rP = mid + 1;
-            int oP = left;
-
-            while (lP <= mid && rP <= right)
+            while (lP < mid && rP <= right)
             {
-                if (Helpers[lP] <= Helpers[rP])
+                if (helper[lP].CompareTo(helper[rP]) < 0)
                 {
-                    input[oP] = Helpers[lP];
-                    oP++;
+                    input[dP] = helper[lP];
+                    dP++;
                     lP++;
                 }
                 else
                 {
-                    input[oP] = Helpers[rP];
+                    input[dP] = helper[rP];
+                    dP++;
                     rP++;
-                    oP++;
                 }
             }
+
             // Only need to copy if left side has remaining values, as the right
             // side values are already in the original array.
-            while (lP <= mid)
+            while (lP < mid)
             {
-                input[oP] = Helpers[lP];
-                oP++;
+                input[dP] = helper[lP];
                 lP++;
+                dP++;
             }
         }
-
 
         // Notes about QuickSort:
         // The partition point guarantees that all values coming before will be less

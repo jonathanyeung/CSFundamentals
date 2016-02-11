@@ -10,6 +10,31 @@ namespace Tests
     [TestClass]
     public class SortingTests
     {
+ 
+        private static bool IsArraySorted<T>(T[] input) where T:IComparable
+        {
+            for (int i = 0; i < input.Length - 1; i++)
+            {
+                if (input[i].CompareTo(input[i+1]) > 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+
+        [TestMethod]
+        public void MergeSort()
+        {
+            var testInput = new int[] { 8, 4, 6, 7, 2, 7, 5, 3, 9 };
+
+            Sorting.MergeSort<int>(testInput);
+
+            Assert.IsTrue(IsArraySorted<int>(testInput));
+        }
+
         [TestMethod]
         public void QuickSortTwo()
         {
