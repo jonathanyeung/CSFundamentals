@@ -63,7 +63,6 @@ namespace Interviews
                     oP++;
                     lP++;
                 }
-
                 else
                 {
                     input[oP] = Helpers[rP];
