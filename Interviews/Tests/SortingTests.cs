@@ -55,7 +55,20 @@ namespace Tests
             {
                 Assert.AreEqual(sortedInput[i], Sorting.SelectionRank(testInput, i + 1));
             }
+        }
 
+        [TestMethod]
+        public void CountingSortTests()
+        {
+            var sortedInput = new int[] { 1, 1, 1, 2, 2, 3 };
+            var testInput = new int[] { 3, 2, 1, 2, 1, 1 };
+
+            Sorting.CountingSort(testInput);
+
+            for (int i = 0; i < sortedInput.Length; i++)
+            {
+                Assert.AreEqual(sortedInput[i], testInput[i]);
+            }
         }
     }
 }

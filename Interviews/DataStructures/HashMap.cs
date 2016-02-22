@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    struct kvp<K, V>
+    public struct KVP<K, V>
     {
         public K key;
         public V value;
     }
 
-    internal class KeyComparer<K,V> : IEqualityComparer<kvp<K,V>> where K : IEquatable<K>
+    internal class KeyComparer<K,V> : IEqualityComparer<KVP<K,V>> where K : IEquatable<K>
     {
-        public bool Equals(kvp<K, V> x, kvp<K, V> y)
+        public bool Equals(KVP<K, V> x, KVP<K, V> y)
         {
             return (x.key.Equals(y.key));
         }
 
-        public int GetHashCode(kvp<K, V> obj)
+        public int GetHashCode(KVP<K, V> obj)
         {
             return obj.GetHashCode();
         }
@@ -29,11 +29,11 @@ namespace DataStructures
     {
         private int size = 1000;
 
-        private List<kvp<K,V>>[] data;
+        private List<KVP<K,V>>[] data;
 
         public HashMap()
         {
-            data = new List<kvp<K, V>>[size];
+            data = new List<KVP<K, V>>[size];
 
             for (int i = 0; i < size; i++)
             {
@@ -88,13 +88,13 @@ namespace DataStructures
 
         public void Add(K key, V value)
         {
-            var _kvp = new kvp<K,V>(){key = key, value = value};
+            var _kvp = new KVP<K,V>(){key = key, value = value};
 
             var index = ComputeHash(key);
 
             if (data[index] == null)
             {
-                data[index] = new List<kvp<K, V>>();
+                data[index] = new List<KVP<K, V>>();
             }
 
             if (data[index].Contains(_kvp, new KeyComparer<K,V>()))
@@ -102,7 +102,7 @@ namespace DataStructures
                 throw new ArgumentException("Key already exists!");
             }
 
-            data[index].Add(new kvp<K, V>() { key = key, value = value });
+            data[index].Add(new KVP<K, V>() { key = key, value = value });
         }
 
         public void Remove(K key)

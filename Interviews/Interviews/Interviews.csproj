@@ -55,10 +55,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Searching.cs" />
     <Compile Include="Sorting.cs" />
+    <Compile Include="StringsAndArrays.cs" />
     <Compile Include="Threading.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataStructures\DataStructures.csproj">
+      <Project>{b560fde0-b7a4-475d-87af-5b70deaa9003}</Project>
+      <Name>DataStructures</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

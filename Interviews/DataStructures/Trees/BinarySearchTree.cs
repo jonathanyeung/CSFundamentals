@@ -8,14 +8,20 @@ namespace DataStructures.Trees
 {
     public class BinarySearchTree<T> where T : IComparable
     {
-        private BinarySearchTree<T> _left;
-        private BinarySearchTree<T> _right;
-        private BinarySearchTree<T> _parent;
+        public BinarySearchTree<T> Left;
+        public BinarySearchTree<T> Right;
+        public BinarySearchTree<T> Parent;
 
-        public BinarySearchTree(T value, BinarySearchTree<T> parent)
+        public BinarySearchTree(T value)
         {
             this.value = value;
-            this._parent = parent;
+            this.Parent = null;
+        }
+
+        private BinarySearchTree(T value, BinarySearchTree<T> parent)
+        {
+            this.value = value;
+            this.Parent = parent;
         }
 
         public T value
@@ -28,24 +34,24 @@ namespace DataStructures.Trees
         {
             if (value.CompareTo(value) <= 0)
             {
-                if (_left == null)
+                if (Left == null)
                 {
-                    _left = new BinarySearchTree<T>(value, this);
+                    Left = new BinarySearchTree<T>(value, this);
                 }
                 else
                 {
-                    _left.Insert(value);
+                    Left.Insert(value);
                 }
             }
             else
             {
-                if (_right == null)
+                if (Right == null)
                 {
-                    _right = new BinarySearchTree<T>(value, this);
+                    Right = new BinarySearchTree<T>(value, this);
                 }
                 else
                 {
-                    _right.Insert(value);
+                    Right.Insert(value);
                 }
             }
         }
@@ -54,26 +60,46 @@ namespace DataStructures.Trees
         {
             if (value.CompareTo(this.value) < 0)
             {
-                if (_left != null)
+                if (Left != null)
                 {
-                    _left.Delete(value);
+                    Left.Delete(value);
                 }
             }
             else if (value.CompareTo(this.value) > 0)
             {
-                if (_right != null)
+                if (Right != null)
                 {
-                    _right.Delete(value);
+                    Right.Delete(value);
                 }
             }
             else
             {
                 // Find the inorder predecessor 
-                if (_right == null && _left == null)
+                if (Right == null && Left == null)
                 {
                     // How do I delete a node??
                     throw new NotImplementedException();
                 }
+            }
+        }
+
+        public BinarySearchTree<T> Find(T value)
+        {
+            if (this.value.CompareTo(value) == 0)
+            {
+                return this;
+            }
+            else if (value.CompareTo(this.value) < 0 && this.Left != null)
+            {
+                return Left.Find(value);
+            }
+            else if (value.CompareTo(this.value) > 0 && this.Right != null)
+            {
+                return Right.Find(value);
+            }
+            else
+            {
+                return null;
             }
         }
     }

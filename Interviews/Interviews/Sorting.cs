@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataStructures.Trees;
 
 namespace Interviews
 {
@@ -240,6 +241,94 @@ namespace Interviews
             var temp = input[a];
             input[a] = input[b];
             input[b] = temp;
+        }
+
+
+        /// <summary>
+        /// Counting Sort is useful if the input contains a small number of 
+        /// values ({1,2,3}). Use a BST to count the instances of each key,
+        /// then just write each value to its count # into the array.
+        /// Complexity is nLog(k), where n is array length, k is key count.
+        /// </summary>
+        /// <param name="input"></param>
+        public static void CountingSort(int[] input)
+        {
+            if (input.Length <= 0)
+            {
+                return;
+            }
+
+            var newKVP = new KVP<int,int>(input[0], 1);
+
+            // Create the tree and insert all values into it.
+            var tree = new BinarySearchTree<KVP<int,int>>(newKVP);
+
+            for (int i = 1; i < input.Length; i++)
+            {
+                var newNode = new KVP<int, int>(input[i], 1);
+                var node = tree.Find(newNode);
+
+                if (node == null)
+                {
+                    tree.Insert(newNode);
+                }
+                else
+                {
+                    node.value.value++;
+                }
+            }
+            
+            // Now iterate through the tree and write out the values to 
+            // the array.
+            int index = 0;
+
+            SearchAndWrite(tree, input, ref index);
+        }
+
+
+        /// <summary>
+        /// Helper method that does in order traversal on the BST from CountingSort,
+        /// and writes the node's 'key' value to the array 'value' number of times
+        /// to the array at the specified index.
+        /// </summary>
+        /// <param name="node">current node of the BST tree</param>
+        /// <param name="input">the result array</param>
+        /// <param name="index">the current write index</param>
+        private static void SearchAndWrite(BinarySearchTree<KVP<int,int>> node, int[] input, ref int index)
+        {
+            // Standard In-Order Traversal.
+            if (node.Left != null)
+            {
+                SearchAndWrite(node.Left, input, ref index);
+            }
+
+            for (var i = index; i < index + node.value.value; i++)
+            {
+                input[i] = node.value.key;
+            }
+            index += node.value.value;
+
+            if (node.Right != null)
+            {
+                SearchAndWrite(node.Right, input, ref index);
+            }
+        }
+    }
+
+    class KVP<K, V> : IComparable where K : IComparable
+    {
+        public K key;
+        public V value;
+
+        public KVP(K key, V value)
+        {
+            this.key = key;
+            this.value = value;
+        }
+
+        public int CompareTo(object obj)
+        {
+            return key.CompareTo((obj as KVP<K, V>).key);
         }
     }
 }
