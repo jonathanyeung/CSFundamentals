@@ -56,7 +56,6 @@
     <Compile Include="Searching.cs" />
     <Compile Include="Sorting.cs" />
     <Compile Include="Threading.cs" />
-    <Compile Include="Trees.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

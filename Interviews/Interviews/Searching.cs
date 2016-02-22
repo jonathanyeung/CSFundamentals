@@ -83,6 +83,7 @@ namespace Interviews
         /// <summary>
         /// Find a value in an array that is sorted, but has been rotated by
         /// k values.
+        /// http://www.geeksforgeeks.org/search-an-element-in-a-sorted-and-pivoted-array/
         /// </summary>
         /// <param name="input"></param>
         /// <param name="value"></param>

@@ -11,6 +11,7 @@ namespace DataStructures.Trees
         public T Value;
         public Node<T> left;
         public Node<T> right;
+        public Node<T> parent;
 
         public Node(T value)
         {
