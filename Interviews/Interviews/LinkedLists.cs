@@ -7,37 +7,56 @@ using System.Threading.Tasks;
 namespace Interviews
 {
 
-    //public class lNode<Taco>
-    //{
-    //    public Taco value;
-    //    public lNode<Taco> Next;
-        
-    //}
+    public class Node<T>
+    {
+        public T value;
+        public Node<T> next;
+
+        public Node(T value)
+        {
+            this.value = value;
+            next = null;
+        }
+
+        public void Append(Node<T> node)
+        {
+            var cur = this;
+
+            while(cur.next != null)
+            {
+                cur = cur.next;
+            }
+
+            cur.next = node;
+        }
+    }
 
     public static class LinkedLists
     {
-        //public static Node ReverseList(Node head)
-        //{
-        //    Node cur = head;
-        //    Node next = head;
-        //    Node prev = head;
+        public static Node<T> ReverseList<T>(Node<T> head)
+        {
+            Node<T> cur = head;
+            Node<T> next = head;
+            Node<T> prev = head;
 
-        //    if (head.Next == null)
-        //    {
-        //        return head;
-        //    }
+            if (head.next == null)
+            {
+                return head;
+            }
 
-        //    cur = head.Next;
+            cur = head.next;
 
-        //    while (cur != null)
-        //    {
-        //        next = cur.Next;
-        //        cur.Next = prev;
-        //        prev = cur;
-        //        cur = next;
-        //    }
+            head.next = null;
 
-        //    return prev;
-        //}
+            while (cur != null)
+            {
+                next = cur.next;
+                cur.next = prev;
+                prev = cur;
+                cur = next;
+            }
+
+            return prev;
+        }
     }
 }
