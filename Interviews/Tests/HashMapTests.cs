@@ -40,6 +40,11 @@ namespace Tests
                 threw = true;
             }
             Assert.IsTrue(threw);
+
+            Assert.IsTrue(map.ContainsKey(1));
+
+            map.Remove(1);
+            Assert.IsFalse(map.ContainsKey(1));
         }
 
         [TestMethod]

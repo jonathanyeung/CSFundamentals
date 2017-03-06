@@ -29,7 +29,8 @@ namespace DataStructures
         {
             data.Add(obj);
             int index = data.Count - 1;
-            int j = index - 1;
+
+            int j = (index - 1) / 2;
 
             while (index > 0)
             {

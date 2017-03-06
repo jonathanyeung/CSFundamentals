@@ -116,5 +116,25 @@ namespace DataStructures
                 list.RemoveAll(k => k.key.Equals(key));
             }
         }
+
+        public bool ContainsKey(K key)
+        {
+            var _kvp = new KVP<K, V>() { key = key, value = default(V) };
+
+            var index = ComputeHash(key);
+
+            if (data[index] == null)
+            {
+                return false;
+            }
+            else if (data[index].Contains(_kvp, new KeyComparer<K, V>()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

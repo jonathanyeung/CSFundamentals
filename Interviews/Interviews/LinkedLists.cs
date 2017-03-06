@@ -58,5 +58,34 @@ namespace Interviews
 
             return prev;
         }
+
+        public static Node<T> RemoveDuplicates<T>(Node<T> head)
+        {
+            var cur = head;
+            var test = head.next;
+            var test_Prev = head;
+            while (cur != null)
+            {
+                while (test != null)
+                {
+                    if (test.value.Equals(cur.value))
+                    {
+                        test_Prev.next = test.next;
+                        test = test.next;
+                    }
+                    else
+                    {
+                        test = test.next;
+                        test_Prev = test_Prev.next;
+                    }
+                }
+                cur = cur.next;
+            }
+
+            return head;
+        }
+
+
+
     }
 }

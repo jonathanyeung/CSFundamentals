@@ -29,7 +29,7 @@ namespace DataStructures
 
             var index = this.Count - 1;
 
-            var j = index - 1;
+            int j = (index - 1) / 2;
 
             while (index > 0)
             {

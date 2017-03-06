@@ -2,12 +2,14 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using DataStructures;
+using System.Diagnostics;
 
 namespace Tests
 {
     [TestClass]
     public class RandomMethods
     {
+        #region String Encoding
         /// <summary>
         /// Given a string of numbers, with the following mapping:
         /// 1 -> A, 2 -> B, ..., 26 -> Z, return the number of 
@@ -41,6 +43,8 @@ namespace Tests
 
             return encodingPossibilities(input.Substring(1));
         }
+
+        #endregion
 
         #region Sudoku
         [TestMethod]
@@ -668,7 +672,7 @@ namespace Tests
 
         #endregion
 
-        #region 
+        #region Image Rotation
         [TestMethod]
         public void RotateImageTest()
         {
@@ -701,6 +705,52 @@ namespace Tests
             input[input.GetLength(0) - 1 - j, i] = input[input.GetLength(0) - 1 - i, input.GetLength(0) - 1 - j];
             input[input.GetLength(0) - 1 - i, input.GetLength(0) - 1 - j] = input[j, input.GetLength(0) - 1 - i];
             input[j, input.GetLength(0) - 1 - i] = tmp;
+        }
+
+        #endregion
+
+        #region TowersOfHanoi
+
+
+        [TestMethod]
+        public void TowersOfHanoiTest()
+        {
+            var left = new Stack<int>();
+
+            for (int i = 4; i > 0; i--)
+            {
+                left.Push(i);
+            }
+
+            var mid = new Stack<int>();
+            var right = new Stack<int>();
+
+            TowersOfHanoi(left, mid, right);
+        }
+
+        private void TowersOfHanoi(Stack<int> left, Stack<int> mid, Stack<int> right)
+        {
+            SwapTowers(left, mid, right, left.Count);
+        }
+
+        private void SwapTowers(Stack<int> source, Stack<int> temp, Stack<int> dest, int n)
+        {
+            if (n == 0)
+            {
+                return;
+            }
+            else if (n == 1)
+            {
+                var i = source.Pop();
+                dest.Push(i);
+            }
+            else
+            {
+                SwapTowers(source, dest, temp, n - 1);
+                var i = source.Pop();
+                dest.Push(i);
+                SwapTowers(temp, source, dest, n - 1);
+            }
         }
 
         #endregion

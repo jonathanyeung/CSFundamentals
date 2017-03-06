@@ -35,7 +35,7 @@ namespace DataStructures.Trees
         /// <param name="t"></param>
         public void Add(T t)
         {
-            Queue < Node < T >> Queue = new Queue<Node<T>>();
+            Queue<Node<T>> Queue = new Queue<Node<T>>();
 
             Queue.Enqueue(root);
 
