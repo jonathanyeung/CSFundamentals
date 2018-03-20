@@ -40,7 +40,7 @@ namespace DataStructures
                     data[index] = tmp;
 
                     index = j;
-                    j = (j + 1) / 2 - 1;
+                    j = (j - 1) / 2;
                 }
                 else
                 {
