@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using DataStructures;
 using System.Diagnostics;
+using System.Text;
 
 namespace Tests
 {
@@ -435,10 +436,10 @@ namespace Tests
             input = input.Replace(" ", "");
             for (int i = 0; i < input.Length; i++)
             {
-                if (input[i] == '/' || 
-                    input[i] == '*' || 
+                if (input[i] == '/' ||
+                    input[i] == '*' ||
                     input[i] == '+' ||
-                    input[i] == '-' || 
+                    input[i] == '-' ||
                     input[i] == '(')
                 {
                     if (parsingNumber)
@@ -472,10 +473,10 @@ namespace Tests
 
                     var op = operatorStack.Pop();
 
-                    while(op != '(')
+                    while (op != '(')
                     {
                         outputQueue.Enqueue(op.ToString());
-                        
+
                         if (operatorStack.Count == 0)
                         {
                             throw new ArgumentException("Mismatched Parenthesis in Expression!");
@@ -499,7 +500,7 @@ namespace Tests
                 outputQueue.Enqueue(int.Parse(input.Substring(numberStartIndex, input.Length - numberStartIndex)).ToString());
             }
 
-            while(operatorStack.Count != 0)
+            while (operatorStack.Count != 0)
             {
                 outputQueue.Enqueue(operatorStack.Pop().ToString());
             }
@@ -521,7 +522,7 @@ namespace Tests
             number,
             op,
             leftParen,
-            rightParen            
+            rightParen
         }
 
 
@@ -581,7 +582,7 @@ namespace Tests
                 }
             }
 
-        cont:
+            cont:
             for (int i = 0; i < input.GetLength(0); i++)
             {
                 for (int j = 0; j < input.GetLength(1); j++)
@@ -801,6 +802,7 @@ namespace Tests
         }
     }
 
+    [TestClass]
     public class DataStructurePlayground
     {
         public void Test()
@@ -809,6 +811,12 @@ namespace Tests
 
             q.Enqueue(1);
             var res = q.Dequeue();
+
+            var t = new Tuple<int, int>(4, 4);
+
+            var _list = new List<int>();
+
+
         }
 
         public void TestStack()
@@ -817,5 +825,243 @@ namespace Tests
 
             s.Push(25);
         }
+
+        [TestMethod]
+        public void LadderTest()
+        {
+            var ret = LadderLength("hit", "cog", new List<string>() { "hot", "dot", "dog", "lot", "log", "cog" });
+            ret = LadderLength("hit", "hit", new List<string>() { "hit" });
+        }
+
+        public int LadderLength(string beginWord, string endWord, IList<string> wordList)
+        {
+            var availableWords = new List<string>(wordList);
+            Queue<string> queue = new Queue<string>();
+            int length = 1;
+            queue.Enqueue(beginWord);
+            int curLength = 1;
+            int nextLength = 0;
+
+            while (queue.Count > 0 || availableWords.Count > 0)
+            {
+                if (curLength == 0)
+                {
+                    curLength = nextLength;
+                    nextLength = 0;
+                    length++;
+                }
+
+                var curWord = queue.Dequeue();
+                curLength--;
+
+                if (curWord == endWord)
+                {
+                    return length;
+                }
+
+                var tmpList = new List<string>(availableWords);
+
+                foreach (var w in availableWords)
+                {
+                    if (OneLetterDelta(w, curWord))
+                    {
+                        queue.Enqueue(w);
+                        tmpList.Remove(w);
+                        nextLength++;
+                    }
+                }
+
+                availableWords = tmpList;
+            }
+
+            return 0;
+
+        }
+
+        [TestMethod]
+        public void TrapRainWaterTest()
+        {
+            var input = new int[] { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
+            var ret = TrapRainWater(input);
+        }
+
+        public int TrapRainWater(int[] height)
+        {
+            int[] maxWater = new int[height.Length];
+
+            int i = 0;
+            int curMaxHeight = 0;
+            int curLeft = 0;
+            while (i < height.Length)
+            {
+                if (height[i] >= curMaxHeight)
+                {
+                    curMaxHeight = height[i];
+                    int j = i + 1;
+                    int curNextMaxHeightIndex = j;
+                    while (j < height.Length)
+                    {
+                        if (height[j] >= height[i])
+                        {
+                            curNextMaxHeightIndex = j;
+                            break;
+                        }
+                        else if (height[j] >= height[curNextMaxHeightIndex])
+                        {
+                            curNextMaxHeightIndex = j;
+                        }
+
+                        j++;
+
+                    }
+                    for (int k = i; k < height.Length && k <= curNextMaxHeightIndex; k++)
+                    {
+                        maxWater[k] = Math.Min(curMaxHeight, height[Math.Min(curNextMaxHeightIndex, height.Length - 1)]);
+                    }
+
+                    i = curNextMaxHeightIndex;
+
+                    if (i < height.Length)
+                    {
+                        curMaxHeight = height[i];
+                        curLeft = i;
+                    }
+                }
+                else
+                {
+                    i++;
+                }
+            }
+
+            var sum = 0;
+            for (int k = 0; k < height.Length; k++)
+            {
+                sum += Math.Max(0, maxWater[k] - height[k]);
+            }
+
+            return sum;
+        }
+
+
+        public bool OneLetterDelta(string a, string b)
+        {
+            int delta = 0;
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] != b[i])
+                {
+                    delta++;
+                }
+            }
+
+            return (delta == 1);
+        }
+
+        public class Person
+        {
+            public string FirstName
+            {
+                get; set;
+            }
+
+            public string LastName
+            {
+                get; set;
+            }
+        }
+
+        [TestMethod]
+        public void Temp()
+        {
+            var me = new Person();
+            Modify(me);
+
+            Debug.WriteLine(me.FirstName);
+        }
+
+        public void Modify(Person a)
+        {
+            a.FirstName = "Jonathan";
+        }
+
+        [TestMethod]
+        public void DecodeTest()
+        {
+            var result = Decode("1xa2xb3xc23xd1xp");
+        }
+
+        public string Decode(string s)
+        {
+            StringBuilder resultBuilder = new StringBuilder();
+            StringBuilder numBuilder = new StringBuilder();
+            const char delimiter = 'x';
+            char curChar = ' ';
+    
+            int i = 0;
+            ParseMode curMode = ParseMode.count;
+
+            while (i < s.Length)
+            {
+                switch (curMode)
+                {
+                    case ParseMode.character:
+                        curChar = s[i];
+                        curMode = ParseMode.write;
+                        break;
+
+                    case ParseMode.delimiter:
+                        curMode = ParseMode.character;
+                        i++;
+                        break;
+
+                    case ParseMode.count:
+                        if (char.IsDigit(s[i]))
+                        {
+                            numBuilder.Append(s[i]);
+                            i++;
+                        }
+                        else
+                        {
+                            curMode = ParseMode.delimiter;
+                        }
+                        break;
+
+                    case ParseMode.write:
+                        int result;
+                        if (!Int32.TryParse(numBuilder.ToString(), out result))
+                        {
+                            throw new ArgumentException();
+                        }
+
+                        for (int j = 0; j < result; j++)
+                        {
+                            resultBuilder.Append(curChar);
+                        }
+
+                        numBuilder.Clear();
+
+                        curMode = ParseMode.count;
+                        i++;
+                        break;
+                }
+            }
+
+            return resultBuilder.ToString();
+
+        }
+
+        public enum ParseMode
+        {
+            character,
+            delimiter,
+            count,
+            write
+        }
     }
 }
+
+
+
+
+

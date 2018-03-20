@@ -37,16 +37,7 @@ namespace Interviews
         {
             Node<T> cur = head;
             Node<T> next = head;
-            Node<T> prev = head;
-
-            if (head.next == null)
-            {
-                return head;
-            }
-
-            cur = head.next;
-
-            head.next = null;
+            Node<T> prev = null;
 
             while (cur != null)
             {
