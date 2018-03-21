@@ -64,6 +64,7 @@
     <Compile Include="HashMapTests.cs" />
     <Compile Include="CacheTests.cs" />
     <Compile Include="LinkedListTests.cs" />
+    <Compile Include="ThreadingTests.cs" />
     <Compile Include="TreeTests.cs" />
   </ItemGroup>
   <ItemGroup>
